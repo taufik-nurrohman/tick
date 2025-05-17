@@ -3,6 +3,11 @@ Time Utility
 
 Utility functions to do time-related tasks.
 
+**FYI:**
+
+ - [Debounce](https://developer.mozilla.org/en-US/docs/Glossary/Debounce)
+ - [Throttle](https://developer.mozilla.org/en-US/docs/Glossary/Throttle)
+
 Usage
 -----
 
