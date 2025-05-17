@@ -2,6 +2,10 @@
   "author": "Taufik Nurrohman",
   "bugs": "https://github.com/taufik-nurrohman/tick/issues",
   "description": "Utility functions to do time-related tasks.",
+  "dependencies": {
+    "@taufik-nurrohman/document": "*",
+    "@taufik-nurrohman/is": "*"
+  },
   "exports": {
     "import": "./index.mjs",
     "require": "./index.js"
@@ -15,6 +19,7 @@
     "debounce",
     "delay",
     "interval",
+    "repeat",
     "throttle",
     "tick",
     "time",
@@ -27,5 +32,5 @@
     "type": "git",
     "url": "git+https://github.com/taufik-nurrohman/tick.git"
   },
-  "version": "1.0.1"
+  "version": "2.0.0"
 }

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Debounce</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "@taufik-nurrohman/document": "https://unpkg.com/@taufik-nurrohman/document@latest/index.mjs",
+          "@taufik-nurrohman/is": "https://unpkg.com/@taufik-nurrohman/is@latest/index.mjs",
+          "@taufik-nurrohman/tick": "https://unpkg.com/@taufik-nurrohman/tick@latest/index.mjs"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <p>Click the button multiple times! The result will update one second after you stop.</p>
+    <p>
+      <button>Today</button>
+    </p>
+    <p></p>
+    <script type="module">
+      import {debounce} from '@taufik-nurrohman/tick';
+      const [debounceStart] = debounce(function () {
+          p.innerHTML = 'Today is ' + (new Date).toISOString();
+      }, 1000);
+      const button = document.querySelector('button');
+      const p = document.querySelectorAll('p')[2];
+      button.addEventListener('click', function (e) {
+          e.preventDefault();
+          if (!p.innerHTML) {
+              p.innerHTML = '&hellip;';
+          }
+          debounceStart();
+      });
+    </script>
+  </body>
+</html>

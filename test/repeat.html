@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Repeat</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "@taufik-nurrohman/document": "https://unpkg.com/@taufik-nurrohman/document@latest/index.mjs",
+          "@taufik-nurrohman/is": "https://unpkg.com/@taufik-nurrohman/is@latest/index.mjs",
+          "@taufik-nurrohman/tick": "https://unpkg.com/@taufik-nurrohman/tick@latest/index.mjs"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <p>Click and hold the button for three seconds! The result will update every 100 milliseconds until you release the button.</p>
+    <p>
+      <button>Today</button>
+    </p>
+    <p></p>
+    <script type="module">
+      import {repeat} from '@taufik-nurrohman/tick';
+      const [repeatStart, repeatStop] = repeat(function () {
+          p.innerHTML = 'Today is ' + (new Date).toISOString();
+      }, 3000, 100);
+      const button = document.querySelector('button');
+      const p = document.querySelectorAll('p')[2];
+      button.addEventListener('mousedown', function (e) {
+          e.preventDefault();
+          if (!p.innerHTML) {
+              p.innerHTML = '&hellip;';
+          }
+          repeatStart();
+      });
+      button.addEventListener('mouseup', function (e) {
+          e.preventDefault();
+          repeatStop();
+      });
+      button.addEventListener('touchstart', function (e) {
+          e.preventDefault();
+          if (!p.innerHTML) {
+              p.innerHTML = '&hellip;';
+          }
+          repeatStart();
+      });
+      button.addEventListener('touchend', function (e) {
+          e.preventDefault();
+          repeatStop();
+      });
+    </script>
+  </body>
+</html>
