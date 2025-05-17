@@ -48,7 +48,7 @@ window.addEventListener('resize', function (e) {
 
 > [!TIP]
 >
-> If the `time` value is neither an integer nor less than zero, the first parameter of the `debounceStart` function call
+> If the `time` value is neither an integer nor less than zero, the first argument of the `debounceStart` function call
 > will be used to hold it:
 >
 > ~~~ js
@@ -77,7 +77,7 @@ window.addEventListener('resize', function (e) {
 
 > [!TIP]
 >
-> If the `time` value is neither an integer nor less than zero, the first parameter of the `delayStart` function call
+> If the `time` value is neither an integer nor less than zero, the first argument of the `delayStart` function call
 > will be used to hold it:
 >
 > ~~~ js
@@ -113,8 +113,8 @@ button.addEventListener('mouseup', function (e) {
 
 > [!TIP]
 >
-> If the `start` value is neither an integer nor less than zero, the first parameter of the `repeatStart` function call
-> will be used to hold it. If the `step` value is neither an integer nor less than zero, the second parameter of the
+> If the `start` value is neither an integer nor less than zero, the first argument of the `repeatStart` function call
+> will be used to hold it. If the `step` value is neither an integer nor less than zero, the second argument of the
 > `repeatStart` function call will be used to hold it:
 >
 > ~~~ js
@@ -150,7 +150,7 @@ window.addEventListener('resize', function (e) {
 
 > [!TIP]
 >
-> If the `step` value is neither an integer nor less than zero, the first parameter of the `throttleStart` function call
+> If the `step` value is neither an integer nor less than zero, the first argument of the `throttleStart` function call
 > will be used to hold it:
 >
 > ~~~ js
