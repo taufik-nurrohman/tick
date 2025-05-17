@@ -18,7 +18,7 @@
     </script>
   </head>
   <body>
-    <p>Click and hold the button for one second! The result will update every 100 milliseconds until you release the button.</p>
+    <p>Click and hold the button for one second! The result will update every 10 milliseconds until you release the button.</p>
     <p>
       <button>Today</button>
     </p>
@@ -27,7 +27,7 @@
       import {repeat} from '@taufik-nurrohman/tick';
       const [repeatStart, repeatStop] = repeat(function () {
           p.innerHTML = 'Today is ' + (new Date).toISOString();
-      }, 1000, 100);
+      }, 1000, 10);
       const button = document.querySelector('button');
       const p = document.querySelectorAll('p')[2];
       if ('ontouchstart' in window) {
