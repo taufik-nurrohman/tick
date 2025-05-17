@@ -8,11 +8,11 @@ function _toArray(iterable) {
 const {clearTimeout, setTimeout} = W; // For better minification
 
 export const debounce = (task, time) => {
-    let timer;
+    let stickyTime = isInteger(time) && time >= 0, timer;
     return [function () {
         timer && clearTimeout(timer);
         let lot = _toArray(arguments);
-        if (!isInteger(time) || time < 0) {
+        if (!stickyTime) {
             time = lot.shift();
         }
         timer = setTimeout(() => task.apply(this, lot), time);
@@ -22,10 +22,10 @@ export const debounce = (task, time) => {
 };
 
 export const delay = (task, time) => {
-    let timer;
+    let stickyTime = isInteger(time) && time >= 0, timer;
     return [function () {
         let lot = _toArray(arguments);
-        if (!isInteger(time) || time < 0) {
+        if (!stickyTime) {
             time = lot.shift();
         }
         timer = setTimeout(() => task.apply(this, lot), time);
@@ -35,13 +35,15 @@ export const delay = (task, time) => {
 };
 
 export const repeat = (task, start, step) => {
-    let timerToRepeat, timerToStart;
+    let stickyStart = isInteger(start) && start >= 0,
+        stickyStep = isInteger(step) && step >= 0,
+        timerToRepeat, timerToStart;
     return [function () {
         let lot = _toArray(arguments);
-        if (!isInteger(start) || start < 0) {
+        if (!stickyStart) {
             start = lot.shift();
         }
-        if (!isInteger(step) || step < 0) {
+        if (!stickyStep) {
             step = lot.shift();
         }
         let r = () => {
@@ -56,11 +58,11 @@ export const repeat = (task, start, step) => {
 };
 
 export const throttle = (task, step) => {
-    let last = 0;
+    let last = 0, stickyStep = isInteger(step) && step >= 0;
     return [function () {
         let lot = _toArray(arguments),
             now = Date.now();
-        if (step < 0) {
+        if (!stickyStep) {
             step = lot.shift();
         }
         if (now - last >= step) {
