@@ -16,7 +16,7 @@ Usage
 ~~~ js
 const {debounce} = require('@taufik-nurrohman/tick');
 
-const [debounceStart] = debounce(e => {
+const [debounceStart] = debounce(() => {
     console.log('resize');
 });
 
@@ -28,7 +28,7 @@ window.addEventListener('resize', debounceStart(1000));
 ~~~ js
 import {debounce} from '@taufik-nurrohman/tick';
 
-const [debounceStart] = debounce(e => {
+const [debounceStart] = debounce(() => {
     console.log('resize');
 });
 
