@@ -7,8 +7,12 @@
       {
         "imports": {
           "@taufik-nurrohman/document": "https://unpkg.com/@taufik-nurrohman/document@latest/index.mjs",
+          "@taufik-nurrohman/f": "https://unpkg.com/@taufik-nurrohman/f@latest/index.mjs",
+          "@taufik-nurrohman/from": "https://unpkg.com/@taufik-nurrohman/from@latest/index.mjs",
+          "@taufik-nurrohman/has": "https://unpkg.com/@taufik-nurrohman/has@latest/index.mjs",
           "@taufik-nurrohman/is": "https://unpkg.com/@taufik-nurrohman/is@latest/index.mjs",
-          "@taufik-nurrohman/tick": "https://unpkg.com/@taufik-nurrohman/tick@latest/index.mjs"
+          "@taufik-nurrohman/tick": "https://unpkg.com/@taufik-nurrohman/tick@latest/index.mjs",
+          "@taufik-nurrohman/to": "https://unpkg.com/@taufik-nurrohman/to@latest/index.mjs"
         }
       }
     </script>
@@ -26,8 +30,7 @@
       }, 1000);
       const button = document.querySelector('button');
       const p = document.querySelectorAll('p')[2];
-      button.addEventListener('click', function (e) {
-          e.preventDefault();
+      button.addEventListener('click', function () {
           if (!p.innerHTML) {
               p.innerHTML = '&hellip;';
           }
