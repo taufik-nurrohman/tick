@@ -183,7 +183,6 @@ button.addEventListener('mouseup', function (e) {
 >
 > ~~~ js
 > const [repeatStart, repeatStop] = repeat(function (e) {
->     // Continue scroll…
 >     document.body.scrollTop += 10;
 >     document.documentElement.scrollTop += 10;
 > });
@@ -191,7 +190,6 @@ button.addEventListener('mouseup', function (e) {
 > const button = document.querySelector('button');
 > 
 > button.addEventListener('mousedown', function (e) {
->     // Start scroll…
 >     document.body.scrollTop += 10;
 >     document.documentElement.scrollTop += 10;
 >     repeatStart.call(this, 1000, 100, e);
@@ -221,7 +219,6 @@ window.addEventListener('keydown', checkOnlineStatus);
 window.addEventListener('mousedown', checkOnlineStatus);
 window.addEventListener('mousemove', checkOnlineStatus);
 window.addEventListener('scroll', checkOnlineStatus);
-window.addEventListener('touchstart', checkOnlineStatus);
 ~~~
 
 > [!TIP]
@@ -234,7 +231,6 @@ window.addEventListener('touchstart', checkOnlineStatus);
 >     console.log('Fetching information about the online status of other users…');
 > }, 1000);
 >
-> // Fetch data every 10 seconds of user activity on the site!
 > function checkOnlineStatus() {
 >     throttleStart.call(this, e);
 > }
@@ -243,5 +239,4 @@ window.addEventListener('touchstart', checkOnlineStatus);
 > window.addEventListener('mousedown', checkOnlineStatus);
 > window.addEventListener('mousemove', checkOnlineStatus);
 > window.addEventListener('scroll', checkOnlineStatus);
-> window.addEventListener('touchstart', checkOnlineStatus);
 > ~~~
