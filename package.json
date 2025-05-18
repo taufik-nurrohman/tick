@@ -1,11 +1,11 @@
 {
   "author": "Taufik Nurrohman",
   "bugs": "https://github.com/taufik-nurrohman/tick/issues",
-  "description": "Utility functions to do time-related tasks.",
   "dependencies": {
     "@taufik-nurrohman/document": "*",
     "@taufik-nurrohman/is": "*"
   },
+  "description": "Utility functions to do time-related tasks.",
   "exports": {
     "import": "./index.mjs",
     "require": "./index.js"
