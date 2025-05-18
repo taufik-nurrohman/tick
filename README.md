@@ -40,20 +40,22 @@ Methods
 
 ### confine(task, time)
 
+Perform a task once. Repeating the same task multiple times will not cause it to be executed until you stop repeating it
+after a certain amount of time has passed. An example use case would be to force the user to be patient.
+
 ~~~ js
 const [confineStart, confineContinue] = confine(function (e) {
-    console.log('tick');
-    console.log(e);
+    console.log('Saving your data…');
 }, 1000);
 
-const button = document.querySelector('button');
+const form = document.querySelector('form');
 
-button.addEventListener('click', function (e) {
-    confineStart.apply(this, [e]);
+form.addEventListener('submit', function (e) {
+    confineStart.call(this, e), e.preventDefault();
 });
 
-// Moving the pointer is considered “rude”. Continue the restriction!
-document.addEventListener('mousemove', function () {
+// Clicking the “Save” button multiple times is considered “rude”. Continue the restriction!
+form.elements['save'].addEventListener('click', function () {
     confineContinue();
 });
 ~~~
@@ -65,31 +67,34 @@ document.addEventListener('mousemove', function () {
 >
 > ~~~ js
 > const [confineStart, confineContinue] = confine(function (e) {
->     console.log('tick');
->     console.log(e);
+>     console.log('Saving your data…');
 > });
 >
-> const button = document.querySelector('button');
+> const form = document.querySelector('form');
 >
-> button.addEventListener('click', function (e) {
->     confineStart.apply(this, [1000, e]);
+> form.addEventListener('submit', function (e) {
+>     confineStart.call(this, 1000, e), e.preventDefault();
 > });
 >
-> document.addEventListener('mousemove', function () {
+> form.elements['save'].addEventListener('click', function () {
 >     confineContinue();
 > });
 > ~~~
 
 ### debounce(task, time)
 
+Perform a task only after the user pauses for a certain amount of time. An example use case would be to start an AJAX
+search instantly after the user stops typing their search query.
+
 ~~~ js
-const [debounceStart] = debounce(function (e) {
-    console.log('tick');
-    console.log(e);
+const [debounceStart, debounceStop] = debounce(function (e) {
+    console.log('Using query “' + this.value + '” to search for the data you want…');
 }, 1000);
 
-window.addEventListener('resize', function (e) {
-    debounceStart.apply(this, [e]);
+const form = document.querySelector('form');
+
+form.elements['query'].addEventListener('input', function (e) {
+    debounceStart.call(this, e);
 });
 ~~~
 
@@ -100,25 +105,30 @@ window.addEventListener('resize', function (e) {
 >
 > ~~~ js
 > const [debounceStart, debounceStop] = debounce(function (e) {
->     console.log('tick');
->     console.log(e);
+>     console.log('Using query “' + this.value + '” to search for the data you want…');
 > });
 >
-> window.addEventListener('resize', function (e) {
->     debounceStart.apply(this, [1000, e]);
+> const form = document.querySelector('form');
+>
+> form.elements['query'].addEventListener('input', function (e) {
+>     debounceStart.call(this, 1000, e);
 > });
 > ~~~
 
 ### delay(task, time)
 
+Perform a task after a certain amount of time has passed. An example use case would be to hide or show a custom
+placeholder based on whether a content-editable element is empty or not.
+
 ~~~ js
-const [delayStart] = delay(function (e) {
-    console.log('tick');
-    console.log(e);
+const [delayStart, delayStop] = delay(function (e) {
+    this.nextElementSibling.style.visibility = "" !== this.innerHTML.trim() ? 'hidden' : "";
 }, 1000);
 
-window.addEventListener('resize', function (e) {
-    delayStart.apply(this, [e]);
+const editor = document.querySelector('[contenteditable]');
+
+editor.addEventListener('input', function (e) {
+    delayStart.call(this, e);
 });
 ~~~
 
@@ -129,28 +139,35 @@ window.addEventListener('resize', function (e) {
 >
 > ~~~ js
 > const [delayStart, delayStop] = delay(function (e) {
->     console.log('tick');
->     console.log(e);
+>     this.nextElementSibling.style.visibility = "" !== this.innerHTML.trim() ? 'hidden' : "";
 > });
 >
-> window.addEventListener('resize', function (e) {
->     delayStart.apply(this, [1000, e]);
+> const editor = document.querySelector('[contenteditable]');
+>
+> editor.addEventListener('input', function (e) {
+>     delayStart.call(this, 1000, e);
 > });
 > ~~~
 
 ### repeat(task, start, step)
 
+Repeat a task only after a certain amount of time has passed. An example use case would be to allow the user to scroll
+an area with a click of a button and then continue scrolling when the user holds the button down.
+
 ~~~ js
 const [repeatStart, repeatStop] = repeat(function (e) {
-    console.log('repeat');
-    console.log(e);
+    // Continue scroll…
+    document.body.scrollTop += 10;
+    document.documentElement.scrollTop += 10;
 }, 1000, 100);
 
 const button = document.querySelector('button');
 
 button.addEventListener('mousedown', function (e) {
-    console.log('start');
-    repeatStart.apply(this, [e]);
+    // Start scroll…
+    document.body.scrollTop += 10;
+    document.documentElement.scrollTop += 10;
+    repeatStart.call(this, e);
 });
 
 button.addEventListener('mouseup', function (e) {
@@ -166,15 +183,18 @@ button.addEventListener('mouseup', function (e) {
 >
 > ~~~ js
 > const [repeatStart, repeatStop] = repeat(function (e) {
->     console.log('repeat');
->     console.log(e);
+>     // Continue scroll…
+>     document.body.scrollTop += 10;
+>     document.documentElement.scrollTop += 10;
 > });
 >
 > const button = document.querySelector('button');
->
+> 
 > button.addEventListener('mousedown', function (e) {
->     console.log('start');
->     repeatStart.apply(this, [1000, 100, e]);
+>     // Start scroll…
+>     document.body.scrollTop += 10;
+>     document.documentElement.scrollTop += 10;
+>     repeatStart.call(this, 1000, 100, e);
 > });
 >
 > button.addEventListener('mouseup', function (e) {
@@ -184,15 +204,24 @@ button.addEventListener('mouseup', function (e) {
 
 ### throttle(task, step)
 
+Perform a task only within a specific time frame and ignore repetitions outside of it. An example use case would be to
+limit an API call.
+
 ~~~ js
-const [throttleStart] = throttle(function (e) {
-    console.log('tick');
-    console.log(e);
+const [throttleStart, throttleStop] = throttle(function (e) {
+    console.log('Fetching information about the online status of other users…');
 }, 1000);
 
-window.addEventListener('resize', function (e) {
-    throttleStart.apply(this, [e]);
-});
+// Fetch data every 10 seconds of user activity on the site!
+function checkOnlineStatus() {
+    throttleStart.call(this, e);
+}
+
+window.addEventListener('keydown', checkOnlineStatus);
+window.addEventListener('mousedown', checkOnlineStatus);
+window.addEventListener('mousemove', checkOnlineStatus);
+window.addEventListener('scroll', checkOnlineStatus);
+window.addEventListener('touchstart', checkOnlineStatus);
 ~~~
 
 > [!TIP]
@@ -202,11 +231,17 @@ window.addEventListener('resize', function (e) {
 >
 > ~~~ js
 > const [throttleStart, throttleStop] = throttle(function (e) {
->     console.log('tick');
->     console.log(e);
-> });
+>     console.log('Fetching information about the online status of other users…');
+> }, 1000);
 >
-> window.addEventListener('resize', function (e) {
->     throttleStart.apply(this, [1000, e]);
-> });
+> // Fetch data every 10 seconds of user activity on the site!
+> function checkOnlineStatus() {
+>     throttleStart.call(this, e);
+> }
+>
+> window.addEventListener('keydown', checkOnlineStatus);
+> window.addEventListener('mousedown', checkOnlineStatus);
+> window.addEventListener('mousemove', checkOnlineStatus);
+> window.addEventListener('scroll', checkOnlineStatus);
+> window.addEventListener('touchstart', checkOnlineStatus);
 > ~~~
