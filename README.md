@@ -38,6 +38,48 @@ window.addEventListener('resize', debounceStart(1000));
 Methods
 -------
 
+### confine(task, time)
+
+~~~ js
+const [confineStart, confineContinue] = confine(function (e) {
+    console.log('tick');
+    console.log(e);
+}, 1000);
+
+const button = document.querySelector('button');
+
+button.addEventListener('click', function (e) {
+    confineStart.apply(this, [e]);
+});
+
+// Moving the pointer is considered “rude”. Continue the restriction!
+document.addEventListener('mousemove', function () {
+    confineContinue();
+});
+~~~
+
+> [!TIP]
+>
+> If the `time` value is neither an integer nor less than zero, the first argument of the `confineStart` function call
+> will be used to hold it:
+>
+> ~~~ js
+> const [confineStart, confineContinue] = confine(function (e) {
+>     console.log('tick');
+>     console.log(e);
+> });
+>
+> const button = document.querySelector('button');
+>
+> button.addEventListener('click', function (e) {
+>     confineStart.apply(this, [1000, e]);
+> });
+>
+> document.addEventListener('mousemove', function () {
+>     confineContinue();
+> });
+> ~~~
+
 ### debounce(task, time)
 
 ~~~ js
@@ -57,11 +99,11 @@ window.addEventListener('resize', function (e) {
 > will be used to hold it:
 >
 > ~~~ js
-> const [debounceStart] = debounce(function (e) {
+> const [debounceStart, debounceStop] = debounce(function (e) {
 >     console.log('tick');
 >     console.log(e);
 > });
-> 
+>
 > window.addEventListener('resize', function (e) {
 >     debounceStart.apply(this, [1000, e]);
 > });
@@ -86,11 +128,11 @@ window.addEventListener('resize', function (e) {
 > will be used to hold it:
 >
 > ~~~ js
-> const [delayStart] = delay(function (e) {
+> const [delayStart, delayStop] = delay(function (e) {
 >     console.log('tick');
 >     console.log(e);
 > });
-> 
+>
 > window.addEventListener('resize', function (e) {
 >     delayStart.apply(this, [1000, e]);
 > });
@@ -127,14 +169,14 @@ button.addEventListener('mouseup', function (e) {
 >     console.log('repeat');
 >     console.log(e);
 > });
-> 
+>
 > const button = document.querySelector('button');
-> 
+>
 > button.addEventListener('mousedown', function (e) {
 >     console.log('start');
 >     repeatStart.apply(this, [1000, 100, e]);
 > });
-> 
+>
 > button.addEventListener('mouseup', function (e) {
 >     repeatStop();
 > });
@@ -159,11 +201,11 @@ window.addEventListener('resize', function (e) {
 > will be used to hold it:
 >
 > ~~~ js
-> const [throttleStart] = throttle(function (e) {
+> const [throttleStart, throttleStop] = throttle(function (e) {
 >     console.log('tick');
 >     console.log(e);
 > });
-> 
+>
 > window.addEventListener('resize', function (e) {
 >     throttleStart.apply(this, [1000, e]);
 > });

@@ -3,7 +3,7 @@
   <head>
     <meta content="width=device-width" name="viewport">
     <meta charset="utf-8">
-    <title>Delay</title>
+    <title>Confine</title>
     <script type="importmap">
       {
         "imports": {
@@ -19,21 +19,31 @@
     </script>
   </head>
   <body>
-    <p>Click the button multiple times! The result will update one second after each click.</p>
+    <p>Click the button multiple times! The result will only update by the first click. You can update it again only if you stop clicking for at least one second.</p>
     <p>
       <button>Today</button>
     </p>
     <p role="status" style="color: #060;"></p>
     <script type="module">
-      import {delay} from '@taufik-nurrohman/tick';
-      const [delayStart] = delay(function () {
+      import {confine} from '@taufik-nurrohman/tick';
+      const [confineStart, confineContinue] = confine(function () {
           p.innerHTML = 'Today is ' + (new Date).toISOString();
       }, 1000);
       const button = document.querySelector('button');
       const p = document.querySelectorAll('p')[2];
       button.addEventListener('click', function () {
-          delayStart();
+          confineStart();
       });
+      // // Moving the pointer is considered “rude”. Continue the restriction!
+      // if ('ontouchstart' in window) {
+      //     document.addEventListener('touchmove', function () {
+      //         confineContinue();
+      //     });
+      // } else {
+      //     document.addEventListener('mousemove', function () {
+      //         confineContinue();
+      //     });
+      // }
     </script>
   </body>
 </html>

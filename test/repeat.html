@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html dir="ltr">
   <head>
+    <meta content="width=device-width" name="viewport">
     <meta charset="utf-8">
     <title>Repeat</title>
     <script type="importmap">
@@ -22,7 +23,7 @@
     <p>
       <button>Today</button>
     </p>
-    <p></p>
+    <p role="status" style="color: #060;"></p>
     <script type="module">
       import {repeat} from '@taufik-nurrohman/tick';
       const [repeatStart, repeatStop] = repeat(function () {
@@ -31,11 +32,10 @@
       const button = document.querySelector('button');
       const p = document.querySelectorAll('p')[2];
       if ('ontouchstart' in window) {
-          button.addEventListener('touchstart', function (e) {
-              e.preventDefault(); // Do not show context menu on long press
-              if (!p.innerHTML) {
-                  p.innerHTML = '&hellip;';
-              }
+          // Prevent context menu on long press
+          button.addEventListener('contextmenu', e => e.preventDefault());
+          button.addEventListener('touchstart', function () {
+              p.innerHTML = 'Today is ' + (new Date).toISOString();
               repeatStart();
           });
           button.addEventListener('touchend', function () {
@@ -43,9 +43,7 @@
           });
       } else {
           button.addEventListener('mousedown', function () {
-              if (!p.innerHTML) {
-                  p.innerHTML = '&hellip;';
-              }
+              p.innerHTML = 'Today is ' + (new Date).toISOString();
               repeatStart();
           });
           button.addEventListener('mouseup', function () {

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html dir="ltr">
   <head>
+    <meta content="width=device-width" name="viewport">
     <meta charset="utf-8">
     <title>Throttle</title>
     <script type="importmap">
@@ -22,7 +23,7 @@
     <p>
       <button>Today</button>
     </p>
-    <p></p>
+    <p role="status" style="color: #060;"></p>
     <script type="module">
       import {throttle} from '@taufik-nurrohman/tick';
       const [throttleStart] = throttle(function () {
@@ -31,9 +32,6 @@
       const button = document.querySelector('button');
       const p = document.querySelectorAll('p')[2];
       button.addEventListener('click', function () {
-          if (!p.innerHTML) {
-              p.innerHTML = '&hellip;';
-          }
           throttleStart();
       });
     </script>

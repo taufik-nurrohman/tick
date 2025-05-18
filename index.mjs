@@ -5,7 +5,28 @@ function _toArray(iterable) {
     return Array.from(iterable);
 }
 
-const {clearTimeout, setTimeout} = W; // For better minification
+const {Date, clearTimeout, setTimeout} = W; // For better minification
+
+export const confine = (task, time) => {
+    let f = 0, first = 1, stickyTime = time, timer;
+    return [function () {
+        timer && clearTimeout(timer);
+        let lot = _toArray(arguments);
+        if (!stickyTime) {
+            time = lot.shift();
+        }
+        if (first) {
+            f = 1;
+            first = 0;
+            task.apply(this, lot);
+        }
+        timer = setTimeout(() => first = 1, time);
+    }, function () {
+        if (f) {
+            first = 0;
+        }
+    }];
+};
 
 export const debounce = (task, time) => {
     let stickyTime = isInteger(time) && time >= 0, timer;
@@ -50,7 +71,11 @@ export const repeat = (task, start, step) => {
             task.apply(this, lot);
             timerToRepeat = setTimeout(r, step);
         };
-        timerToStart = setTimeout(r, start);
+        if (start > 0) {
+            timerToStart = setTimeout(r, start);
+        } else {
+            r();
+        }
     }, function () {
         timerToRepeat && clearTimeout(timerToRepeat);
         timerToStart && clearTimeout(timerToStart);
