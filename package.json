@@ -16,10 +16,12 @@
   ],
   "homepage": "https://taufik-nurrohman.js.org",
   "keywords": [
+    "confine",
     "debounce",
     "delay",
     "interval",
     "repeat",
+    "restrict",
     "throttle",
     "tick",
     "time",
