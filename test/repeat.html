@@ -34,11 +34,13 @@
       if ('ontouchstart' in window) {
           // Prevent context menu on long press
           button.addEventListener('contextmenu', e => e.preventDefault());
+          // Prevent text selection on long press
+          button.style.userSelect = 'none';
           button.addEventListener('touchstart', function () {
               p.innerHTML = 'Today is ' + (new Date).toISOString();
               repeatStart();
           });
-          button.addEventListener('touchend', function () {
+          document.addEventListener('touchend', function () {
               repeatStop();
           });
       } else {
@@ -46,7 +48,7 @@
               p.innerHTML = 'Today is ' + (new Date).toISOString();
               repeatStart();
           });
-          button.addEventListener('mouseup', function () {
+          document.addEventListener('mouseup', function () {
               repeatStop();
           });
       }

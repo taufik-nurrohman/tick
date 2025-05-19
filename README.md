@@ -170,7 +170,7 @@ button.addEventListener('mousedown', function (e) {
     repeatStart.call(this, e);
 });
 
-button.addEventListener('mouseup', function (e) {
+document.addEventListener('mouseup', function (e) {
     repeatStop();
 });
 ~~~
@@ -195,7 +195,7 @@ button.addEventListener('mouseup', function (e) {
 >     repeatStart.call(this, 1000, 100, e);
 > });
 >
-> button.addEventListener('mouseup', function (e) {
+> document.addEventListener('mouseup', function (e) {
 >     repeatStop();
 > });
 > ~~~
